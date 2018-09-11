@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
+const users = require('./routes/api/users');
+const profiles = require('./routes/api/profiles');
+const posts = require('./routes/api/posts');
+
 const db = require('./config/keys').mongoURI;
 mongoose.connect(db).then(()=>console.log("MongoDB connected"))
 	.catch(err=> console.log(err));
@@ -9,6 +13,11 @@ mongoose.connect(db).then(()=>console.log("MongoDB connected"))
 app.get('/', (request, response)=>{
 	response.end('hello\n');	
 });
+
+//use routes
+app.use('/api/users', users);
+app.use('/api/profiles', profiles);
+app.use('/api/posts', posts);
 
 const port =  process.env.PORT || 5000;
 
