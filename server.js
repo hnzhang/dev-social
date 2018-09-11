@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require("passport");//has a lot authentication methods
 
 const app = express();
 //Body  Parser middleware
@@ -15,9 +16,9 @@ const db = require('./config/keys').mongoURI;
 mongoose.connect(db).then(()=>console.log("MongoDB connected"))
 	.catch(err=> console.log(err));
 
-app.get('/', (request, response)=>{
-	response.end('hello\n');	
-});
+//passport middleware
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 //use routes
 app.use('/api/users', users);
