@@ -4,6 +4,9 @@ const bcript = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const keys = require('../../config/keys');
 const passport = require('passport');
+
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 const router = express.Router();
 
 const User  = require('../../models/User');
@@ -19,6 +22,10 @@ router.get('/test', (request, response)=>{
  * @access public
  */
 router.post('/register', (request, response)=>{
+	const {errors, isValid} = validateRegisterInput(request.body);
+	if(!isValid){
+		response.status(400).json(errors);
+	}
 	User.findOne({email: request.body.email})
 		.then(user=>{
 			if(user){
@@ -53,13 +60,17 @@ router.post('/register', (request, response)=>{
  * @access public
  */
 router.post('/login', (request, response)=>{
+	const {errors, isValid} = validateLoginInput(request.body);
+	if(!isValid){
+		return response.status(400).json(errors);
+	}
 	const email = request.body.email;
 	const password =  request.body.password;
-
 	User.findOne({email})
 		.then(user=>{
 			if(!user){
-				return response.status(404).json({email: 'User not found'});
+				errors.email = `user with email ${email} cannot be found`;
+				return response.status(404).json(errors);
 			}else{
 				bcript.compare(password, user.password)
 					.then(isMatch =>{
