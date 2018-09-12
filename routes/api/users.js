@@ -6,6 +6,7 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 
 const validateRegisterInput = require('../../validation/register');
+
 const validateLoginInput = require('../../validation/login');
 const router = express.Router();
 
@@ -23,13 +24,15 @@ router.get('/test', (request, response)=>{
  */
 router.post('/register', (request, response)=>{
 	const {errors, isValid} = validateRegisterInput(request.body);
+	//check valiation
 	if(!isValid){
 		response.status(400).json(errors);
 	}
 	User.findOne({email: request.body.email})
 		.then(user=>{
 			if(user){
-				return response.status(400).json({email: "Email alrady exists"}); //user exists already
+				errors.email = 'Email already exists';
+				return response.status(400).json(errors); //user exists already
 			}else{
 				const avatar = gravatar.url(request.body.email, {s:'200', r:'pg', d:'mm' });
 				const newUser = new User({
@@ -66,6 +69,10 @@ router.post('/login', (request, response)=>{
 	}
 	const email = request.body.email;
 	const password =  request.body.password;
+
+	if(!isValid){
+		return response.status(400).json(errors);
+	}
 	User.findOne({email})
 		.then(user=>{
 			if(!user){

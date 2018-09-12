@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+const validator = require('validator');
+const isEmpty = require('./utils');
+
+module.exports = function validateRegisterInput(data){
+	let errors = {};
+	//
+	if(!validator.isLength(data.name, {min:2, max: 30})){
+		errors.name = 'Name must be between 2 and 30 characters';
+	}
+
+	return {
+		errors: errors,
+		isValid: isEmpty(errors)
+	}
+}
+=======
 const validator = require('validator');
 
 const isEmpty = require('./utils');
@@ -33,3 +50,4 @@ function validateRegisterInput(data){
 }
 
 module.exports = validateRegisterInput;
+>>>>>>> 1f70720b465605b0aa4b05ad3dd3a2c4257c2c07
