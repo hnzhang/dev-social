@@ -13,10 +13,6 @@ const router = express.Router();
 const User  = require('../../models/User');
 const secrete = require('../../config/keys').secretOrKey;
 
-router.get('/test', (request, response)=>{
-	response.json({msg:  "users work"});
-});
-
 /**
  * @route GET api/users/register
  * @desc Register User
@@ -26,7 +22,7 @@ router.post('/register', (request, response)=>{
 	const {errors, isValid} = validateRegisterInput(request.body);
 	//check valiation
 	if(!isValid){
-		response.status(400).json(errors);
+		return response.status(400).json(errors);
 	}
 	User.findOne({email: request.body.email})
 		.then(user=>{

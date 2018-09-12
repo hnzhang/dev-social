@@ -8,14 +8,15 @@ function validateProfileInput(data){
     data.handle = isEmpty(data.handle) ? '' : data.handle;
     data.status = isEmpty(data.status) ? '' : data.status;
     data.skills = isEmpty(data.skills) ? '' : data.skills;
+    data.status = isEmpty(data.status) ? "" : data.status;
     if(validator.isLength(data.handle, {min: 2, max: 40})){
-        error.handle = 'Handle needs to be between 2 and 40 chars';
+        errors.handle = 'Handle needs to be between 2 and 40 chars';
     }
     if(validator.isEmpty(data.handle)){
-        error.handle = "Profile handle is required";
+        errors.handle = "Profile handle is required";
     }
     if(validator.isEmpty(data.status)){
-        error.status = 'Profile status is required';
+        errors.status = 'Profile status is required';
     }
 
     if(validator.isEmpty(data.skills)){
@@ -26,6 +27,10 @@ function validateProfileInput(data){
             errors.website = "Profile website has to be a valid URL";
         }
     }
+    if(validator.isEmpty(data.status)){
+        errors.status = 'Profile status needs a value';
+    }
+
 
     return {errors: errors, isValid: isEmpty(errors)};
 }

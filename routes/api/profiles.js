@@ -35,7 +35,7 @@ router.post('/', passport.authenticate('jwt', { sesson: false}), (request, respo
 	const {errors, isValid} = validateProfileInput(request.body);
 	//get all the fields for profile
 	const profileFields = {};
-	profile.user = request.user.id;
+	profileFields.user = request.user.id;
 	if(request.body.handle){
 		profileFields.handle = request.body.handle;
 	}
@@ -57,7 +57,7 @@ router.post('/', passport.authenticate('jwt', { sesson: false}), (request, respo
 	if(request.body.githubusername){
 		profileFields.githubusername = request.body.githubusername;
 	}
-	profile.social = {};
+	profileFields.social = {};
 	if(request.body.facebook){
 		profileFields.social.facebook = request.body.facebook;
 	}
@@ -93,6 +93,63 @@ router.post('/', passport.authenticate('jwt', { sesson: false}), (request, respo
 					});
 			}
 		});
+});
+
+/**
+ * @route GET api/profiles/handle/:handle
+ * @desc get profile by handle
+ * @access public
+ */
+router.get('/handle/:handle', (request, response)=>{
+	const errors = {};
+	Profile.findOne({handle: request.params.handle})
+		.populate('user', ['name', 'avatar'])
+		.then(profile=>{
+			if(!profile){
+					errors.profile = 'No profile found for this user';
+					return response.status(404).json(errors);
+			}
+			response.json(profile);
+		})
+		.catch(err => response.status(404).json(err));
+});
+
+/*
+ * @route GET api/profiles/user/:user_id
+ * @desc get user profile by user id
+ * @access public
+ */
+router.get('/user/:user_id', (request, response)=>{
+	const userId = request.params.user_id;
+	Profile.findOne({user: userId})
+		.populate('user', ['name', 'avatar'])
+		.then(profile=>{
+			if(!profile){
+					errors.profile = '[Get user profile by id] No profile found for this user';
+					return response.status(404).json(errors);
+			}
+			response.json(profile);
+		})
+		.catch(err => response.status(404).json({profile: 'No Profile for this user'}));
+});
+
+/**
+ * @route GET api/profiles/all
+ * @desc get all the profiles
+ * @access public
+ */
+router.get('/all', (request, response)=>{
+	const errors = {};
+	Profile.find()
+		.populate('user', ['name', 'avatar'])
+		.then(profiles=>{
+			if(!profiles){
+				errors.profiles = "No profile found";
+				return response.status(404).json(errors);
+			}
+			return response.json(profiles);
+		})
+		.catch(err => response.status(404).json({profiles: "Cannot get profiles"}));
 });
 
 module.exports = router;
