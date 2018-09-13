@@ -12,8 +12,8 @@ const users = require('./routes/api/users');
 const profiles = require('./routes/api/profiles');
 const posts = require('./routes/api/posts');
 
-const db = require('./config/keys').mongoURI;
-mongoose.connect(db).then(()=>console.log("MongoDB connected"))
+const dbURL = require('./config/keys').mongoURI;
+mongoose.connect(dbURL, {useNewUrlParser: true}).then(()=>console.log("MongoDB connected"))
 	.catch(err=> console.log(err));
 
 //passport middleware

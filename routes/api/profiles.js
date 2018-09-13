@@ -9,6 +9,8 @@ const Profile = require('../../models/Profile');
 
 //validator
 const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 
 // @route GET api/profile/
 // @desc get current user profile
@@ -70,6 +72,8 @@ router.post('/', passport.authenticate('jwt', { sesson: false}), (request, respo
 	if(request.body.intagram){
 		profileFields.social.intagram = request.body.instagram;
 	}
+
+	console.log("twitter", profileFields.social.twitter, request.body.twitter);
 
 	Profile.findOne({user: request.user.id})
 		.then(profile=>{
@@ -152,4 +156,112 @@ router.get('/all', (request, response)=>{
 		.catch(err => response.status(404).json({profiles: "Cannot get profiles"}));
 });
 
+/**
+ * @route POST api/profiles/experience
+ * @desc add experience to profile
+ * @access private
+ */
+
+ router.post('/experience', passport.authenticate('jwt', {session: false}), (request, response)=>{
+	 console.log("request.body", request.body);
+	const {errors, isValid} = validateExperienceInput(request.body);
+	if(!isValid){
+		return response.status(404).json(errors);
+	}
+	Profile.findOne({user: request.user.id})
+		.then(profile=>{
+			if(!profile){//the doesn't have profile yet.
+				errors.profile = "Cannot find profile for current user yet. Please add profile first";
+				return response.status(404).json(errors);
+			}
+			const newExperience = {
+				title: request.body.title,
+				company: request.body.company,
+				location: request.body.location,
+				from: request.body.from,
+				to: request.body.to,
+				current: request.body.current ? true : false ,
+				description: request.body.description,
+			};
+			//Add to experience array
+			profile.experience.unshift(newExperience);
+			profile.save();
+			response.json(profile);
+		})
+		.catch(err => response.status(404).json(err));
+ });
+
+ /**
+  * @route POST api/profiles/education
+  * @desc add education to the profile
+  * @access private
+  */
+router.post('/education', passport.authenticate('jwt', {session:false}), (request, response)=>{
+	const {errors, isValid} = validateEducationInput(request.body);
+	if(!isValid){
+		return response.status(404).json(errors);
+	}
+	Profile.findOne({user:request.user.id})
+		.then(profile=>{
+			if(!profile){//the doesn't have profile yet.
+				errors.profile = "Cannot find profile for current user yet. Please add profile first";
+				return response.status(404).json(errors);
+			}
+			const newEducation = {
+				school: request.body.school,
+				degree: request.body.degree,
+				fieldOfStudy: request.body.fieldOfStudy,
+				from: request.body.from,
+				to: request.body.to,
+				current: request.body.current ? true : false,
+				description: request.body.description,
+			};
+			//Add education to education array
+			profile.education.unshift(newEducation);
+			profile.save();
+
+			response.json(profile);
+		})
+		.catch(err => response.status(404).json(err));
+});
+
+/**
+ * @route DELETE api/profiles/experience/:exp_id
+ * @desc delete experience from the profile
+ * @access private
+ */
+router.post('/experience/:exp_id', passport.authenticate('jwt', {session: false}), (request, response)=>{
+	Profile.findOne({user: request.user.id})
+		.then(profile=>{
+			const removeIndex = profile.experience.map(item=>item.id)
+				.indexOf(request.params.exp_id);
+			if(removeIndex === -1){
+				return response.status(404).json({experience:"cannot find related experience info"});
+			}
+			profile.experience.splice(removeIndex, 1);
+			profile.save()
+				.then(profile=>response.json(profile));
+		});
+});
+
+/**
+ * @route DELETE api/profiles/education/:education_id
+ * @desc delete education info from profile
+ * @access private
+ */
+router.post('/education/:education_id', passport.authenticate('jwt', {session:false}), (request, response)=>{
+	Profile.findOne({user: request.user.id})
+		.then(profile=>{
+			const removeIndex = profile.education.map(item=>item.id)
+				.indexOf(request.params.education_id);
+				if(removeIndex === -1){
+					return response.status(404).json({education:"cannot find related education info"});
+				}
+			profile.education.splice(removeIndex, 1);
+			profile.save()
+				.then(profile=>response.json(profile));
+		});
+
+
+})
 module.exports = router;
