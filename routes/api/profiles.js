@@ -163,7 +163,6 @@ router.get('/all', (request, response)=>{
  */
 
  router.post('/experience', passport.authenticate('jwt', {session: false}), (request, response)=>{
-	 console.log("request.body", request.body);
 	const {errors, isValid} = validateExperienceInput(request.body);
 	if(!isValid){
 		return response.status(404).json(errors);
