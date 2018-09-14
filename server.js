@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require("passport");//has a lot authentication methods
+const path = require('path');
 
 const app = express();
 //Body  Parser middleware
@@ -24,6 +25,14 @@ require('./config/passport')(passport);
 app.use('/api/users', users);
 app.use('/api/profiles', profiles);
 app.use('/api/posts', posts);
+
+//serve static assets if it is in production
+if(process.env.NODE_ENV === "production"){
+	app.use(express.static('/client/static'));
+	app.get('*', (request, response)=>{
+		response.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 const port =  process.env.PORT || 5000;
 
