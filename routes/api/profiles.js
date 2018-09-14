@@ -70,7 +70,10 @@ router.post('/', passport.authenticate('jwt', { sesson: false}), (request, respo
 		profileFields.social.twitter = request.body.twitter;
 	}
 	if(request.body.intagram){
-		profileFields.social.intagram = request.body.instagram;
+		profileFields.social.instagram = request.body.instagram;
+	}
+	if(request.body.youtube){
+		profileFields.social.youtube = request.body.youtube;
 	}
 
 	console.log("twitter", profileFields.social.twitter, request.body.twitter);
