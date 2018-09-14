@@ -7,6 +7,7 @@ const Post  = require('../../models/Post');
 const Profile = require('../../models/Profile');
 
 const validatePostInput = require('../../validation/post');
+const validatePostCommentInput = require('../../validation/postComment');
 
 router.get('/test', (request, response)=>{
 	response.json({msg:  "users work"});
@@ -126,5 +127,54 @@ router.get('/test', (request, response)=>{
 				.catch(err => response.status(404).json({post_unlike: "error happens during unlike"}));
 		});
  });
+
+ /**
+  * @route POST /api/posts/comment/:post_id
+  * @description add a comment to the post specified by post_id
+  * @access private
+  */
+ router.post('/comment/:post_id', passport.authenticate('jwt', {session: false}), (request, response)=>{
+	const {errors, isValid} = validatePostCommentInput(request.body);
+	if(!isValid){
+		return response.status(404).json(errors);
+	}
+	Profile.findOne({user: request.user.id})
+		.then(profile=>{
+			Post.findById(request.params.post_id)
+				.then(post=>{
+					const newComment = {
+						user: profile._id,
+						text: request.body.text,
+						name: profile.name,
+						avatar: request.user.avatar,
+					};
+					post.comments.unshift(newComment);
+					post.save().then(post=> response.json(post));
+				})
+				.catch(err => response.status(400).json({post_comment_add:" Error happened"}));
+		});
+ } );
+
+/**
+ * @route DELETE /api/posts/:post_id/comment/:comment_id
+ * @description delete the comment specified by comment_id on a post specified by post_id
+ * @access private
+ */
+router.delete('/:post_id/comment/:comment_id', passport.authenticate('jwt', {session: false}), (request, response)=>{
+	Profile.findOne({user: request.user.id})
+		.then(profile=>{
+			Post.findById(request.params.post_id)
+				.then(post=>{
+					//find comment by id
+					const commentIndex = post.comments.map(c => c._id.toString()).indexOf(request.params.comment_id);
+					if(commentIndex < 0){
+						return response.status(404).json({errors:"[post comment deletion] cannot find given comment with id"});
+					}
+					post.comments.splice(commentIndex, 1);
+					post.save().then(post => response.json(post));
+				})
+				.catch(err => response.status(400).json({errors:"[post comment deletion] Error happened"}));
+			});
+})
 
 module.exports = router;
