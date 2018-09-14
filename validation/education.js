@@ -22,6 +22,5 @@ module.exports = function validateEducationInput(data){
         errors.to = "Ending date is needed for education info";
         errors.current = "Please either provide ending date or set current as true";
     }
-
     return {errors: errors, isValid: isEmpty(errors)};
 }
