@@ -15,7 +15,7 @@ class Register extends Component {
       email: '',
       password: '',
       password2: '',
-     // errors: {},
+      errors: {}, // to have errors on state to have clean initialization
     };
 
     this.onChange = this.onChange.bind(this);
@@ -23,16 +23,16 @@ class Register extends Component {
   }
 
   componentDidMount() {
-    //if (this.props.auth.isAuthenticated) {
-    //  this.props.history.push('/dashboard');
-   // }
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
   }
 
- // componentWillReceiveProps(nextProps) {
- //   if (nextProps.errors) {
- //     this.setState({ errors: nextProps.errors });
- //   }
- // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
 
   //to handle input
   onChange(e) {
@@ -54,7 +54,6 @@ class Register extends Component {
     axios.post('/api/users/register', newUser)
       .then(response=>console.log(response.data))
       .catch(err=>{
-        console.log(err.response.data);
         this.setState({errors:err.response.data});
       });
       
@@ -62,8 +61,7 @@ class Register extends Component {
   }
 
   render() {
-    //const { errors } = this.state;
-    const errors  = this.props.errors;
+    const { errors } = this.state;
     //const user  = this.props.auth.user;
 
     return (

@@ -4,7 +4,7 @@ import { GET_ERRORS, SET_CURRENT_USER } from './types';
 
 import setAuthToken from '../utils/setAuthToken';
 
-function setCurrentUser(decoded){
+export function setCurrentUser(decoded){
 	return {
 		type: SET_CURRENT_USER,
 		payload: decoded,
