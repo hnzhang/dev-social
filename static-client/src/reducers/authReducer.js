@@ -1,6 +1,5 @@
-//import {TEST_DISPATCH} from '../actions/types';
-import {PASSED_LOGIN} from '../actions/types'
-
+import { SET_CURRENT_USER} from '../actions/types';
+import {isEmpty} from '../utils/utils';
 const initState = {
 	isAuthenticated: false,
 	user: {},
@@ -8,8 +7,11 @@ const initState = {
 
 function reducer (state = initState, action){
 	switch(action.type){
-		case PASSED_LOGIN:
-			return {...state, isAuthenticated:true, user: action.payload}; 
+		case SET_CURRENT_USER:
+			return {...state, 
+				isAuthenticated: !isEmpty(action.payload),
+				user: action.payload,
+				}; 
 		default:
 			return state;
 	}
