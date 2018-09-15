@@ -66,13 +66,11 @@ router.post('/login', (request, response)=>{
 	const email = request.body.email;
 	const password =  request.body.password;
 
-	if(!isValid){
-		return response.status(400).json(errors);
-	}
 	User.findOne({email})
 		.then(user=>{
 			if(!user){
-				errors.email = `user with email ${email} cannot be found`;
+				errors.email = "incorrect email/password";
+				errors.password = "incorrect email/password";
 				return response.status(404).json(errors);
 			}else{
 				bcript.compare(password, user.password)
@@ -88,7 +86,9 @@ router.post('/login', (request, response)=>{
 								});
 							});
 						}else{
-							return response.status(404).json({msg: 'password incorrect!'});
+							errors.email = "incorrect email/password";
+							errors.password = "incorrect email/password";
+							return response.status(404).json(errors);
 						}
 					});
 			}
