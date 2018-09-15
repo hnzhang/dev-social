@@ -1,4 +1,5 @@
-import {TEST_DISPATCH} from '../actions/types';
+//import {TEST_DISPATCH} from '../actions/types';
+import {PASSED_LOGIN} from '../actions/types'
 
 const initState = {
 	isAuthenticated: false,
@@ -7,8 +8,8 @@ const initState = {
 
 function reducer (state = initState, action){
 	switch(action.type){
-		case TEST_DISPATCH:
-			return { ...state, user: action.payload, }
+		case PASSED_LOGIN:
+			return {...state, isAuthenticated:true, user: action.payload}; 
 		default:
 			return state;
 	}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import { connect } from 'react-redux';
-//import { loginUser } from '../../actions/authActions';
+import { connect } from 'react-redux';
+import {loginUser}  from '../../actions/loginAction';
 import TextFieldGroup from '../common/TextFieldGroup';
 
 class Login extends Component {
@@ -18,19 +18,19 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    //if (this.props.auth.isAuthenticated) {
-    //  this.props.history.push('/dashboard');
-    //}
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-   // if (nextProps.auth.isAuthenticated) {
-    //  this.props.history.push('/dashboard');
-   // }
+    if (nextProps.auth.isAuthenticated) {
+     this.props.history.push('/dashboard');
+    }
 
-    //if (nextProps.errors) {
-    //  this.setState({ errors: nextProps.errors });
-   // }
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onSubmit(e) {
@@ -41,7 +41,7 @@ class Login extends Component {
       password: this.state.password
     };
     console.log(userData);
-    //this.props.loginUser(userData);
+    this.props.loginUser(userData);
   }
 
   onChange(e) {
@@ -85,8 +85,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  //loginUser: PropTypes.func.isRequired,
-  //auth: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
 
@@ -95,5 +95,5 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default Login;
-//export default connect(mapStateToProps, { loginUser })(Login);
+//export default Login;
+export default connect(mapStateToProps, { loginUser })(Login);
