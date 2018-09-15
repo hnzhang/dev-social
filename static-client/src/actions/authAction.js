@@ -9,7 +9,7 @@ export const registerUser = (userData, history) => dispatch=>{
 				//console.log(response.data);
 			})
       .catch(err=>{
-				console.log("get errors", GET_ERRORS);
+				//console.log("get errors", GET_ERRORS);
 					dispatch({ type: GET_ERRORS, payload: err.response.data, });
       });
 }
