@@ -3,11 +3,12 @@ import jwtDecoder from 'jwt-decode';
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 
 import setAuthToken from '../utils/setAuthToken';
+import { clearCurrentProfile } from './profileAction';
 
-export function setCurrentUser(decoded){
+export function setCurrentUser(userData){
 	return {
 		type: SET_CURRENT_USER,
-		payload: decoded,
+		payload: userData,
 	};
 }
 
@@ -41,4 +42,5 @@ export const logoutUser = ( ) => dispatch => {
 	//remove auth header from axios
 	setAuthToken(false);
 	dispatch( setCurrentUser({}));
+	dispatch(clearCurrentProfile());
 }

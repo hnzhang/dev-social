@@ -14,6 +14,8 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/login';
 import Register from './components/auth/register';
 import Dashboard from './components/dashboard/Dashboard';
+import CreateProfile from './components/create-profile/CreateProfile';
+import EditProfile from './components/edit-profile/EditProfile';
 
 import './App.css';
 
@@ -44,6 +46,8 @@ class App extends Component {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/dashboard' component={Dashboard} />
+              <Route exact path='/create-profile' component={CreateProfile} />
+              <Route exact path='/edit-profile' component={EditProfile} />
             </div>
             <Footer />
           </div>
