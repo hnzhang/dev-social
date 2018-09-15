@@ -15,7 +15,7 @@ class Register extends Component {
       email: '',
       password: '',
       password2: '',
-      errors: {},
+     // errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -28,11 +28,11 @@ class Register extends Component {
    // }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
-  }
+ // componentWillReceiveProps(nextProps) {
+ //   if (nextProps.errors) {
+ //     this.setState({ errors: nextProps.errors });
+ //   }
+ // }
 
   //to handle input
   onChange(e) {
@@ -58,16 +58,17 @@ class Register extends Component {
         this.setState({errors:err.response.data});
       });
       */
+     // this.props.history is need for withRouter
     this.props.registerUser(newUser, this.props.history);
   }
 
   render() {
-    const { errors } = this.state;
-    const user  = this.props.auth.user;
+    //const { errors } = this.state;
+    const errors  = this.props.errors;
+    //const user  = this.props.auth.user;
 
     return (
       <div className="register">
-        {user ? user.name : null}
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -123,4 +124,4 @@ const mapStateToProps = state => ({
 });
 
 //export default connect(mapStateToProps, { registerUser })(withRouter(Register));
-export default connect(mapStateToProps, {registerUser} )(Register);
+export default connect(mapStateToProps, {registerUser} )(withRouter(Register));
