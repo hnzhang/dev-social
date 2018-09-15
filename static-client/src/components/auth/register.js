@@ -50,14 +50,14 @@ class Register extends Component {
       password2: this.state.password2,
     };
     console.log(newUser);
-    /*
+    
     axios.post('/api/users/register', newUser)
       .then(response=>console.log(response.data))
       .catch(err=>{
         console.log(err.response.data);
         this.setState({errors:err.response.data});
       });
-      */
+      
     this.props.registerUser(newUser, this.props.history);
   }
 
