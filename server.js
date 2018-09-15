@@ -28,9 +28,9 @@ app.use('/api/posts', posts);
 
 //serve static assets if it is in production
 if(process.env.NODE_ENV === "production"){
-	app.use(express.static('/static-client/static'));
-	app.get('*', (request, response)=>{
-		response.sendFile(path.resolve(__dirname, 'static-client', 'build', 'index.html'));
+	app.use(express.static(path.join(__dirname, 'static-client/build')));
+	app.get('/', (request, response)=>{
+		response.sendFile(path.join(__dirname, 'static-client/build/index.html'));
 	});
 }
 
