@@ -33,3 +33,12 @@ export const loginUser = (loginData, history) => dispatch => {
 			});
 		});
 }
+
+export const logoutUser = ( ) => dispatch => {
+	console.log("trying to logout");
+	//remove token from localStorage
+	localStorage.removeItem("jwtToken");
+	//remove auth header from axios
+	setAuthToken(false);
+	dispatch( setCurrentUser({}));
+}

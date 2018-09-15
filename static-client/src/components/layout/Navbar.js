@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-//import PropTypes from 'prop-types';
-//import { connect } from 'react-redux';
-//import { logoutUser } from '../../actions/authActions';
-//import { clearCurrentProfile } from '../../actions/profileActions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/loginAction';
+import { clearCurrentProfile } from '../../actions/profileAction';
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
-//    this.props.clearCurrentProfile();
-//    this.props.logoutUser();
+    this.props.clearCurrentProfile();
+    this.props.logoutUser();
   }
 
   render() {
-    //const { isAuthenticated, user } = this.props.auth;
-    const { isAuthenticated, user } = { isAuthenticated: false, user:{}};
+    const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
@@ -29,7 +28,7 @@ class Navbar extends Component {
           </a>
         </li>
         <li className="nav-item">
-          <a href=""
+          <a href="/logout"
             onClick={this.onLogoutClick.bind(this)}
             className="nav-link" >
             <img className="rounded-circle"
@@ -86,7 +85,6 @@ class Navbar extends Component {
   }
 }
 
-/*
 Navbar.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
@@ -96,8 +94,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(
-  Navbar
-);
-*/
-export default Navbar;
+export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })( Navbar);
