@@ -57,12 +57,7 @@ class Register extends Component {
         console.log(err.response.data);
         this.setState({errors:err.response.data});
       });
-<<<<<<< HEAD
       
-=======
-      */
-     // this.props.history is need for withRouter
->>>>>>> 15c05ae554e3baf104df3a45f2a5bc5e7015cb8a
     this.props.registerUser(newUser, this.props.history);
   }
 
