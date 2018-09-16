@@ -6,7 +6,7 @@ import PostItem from '../posts/PostItem';
 import CommentForm from './CommentForm';
 import CommentFeed from './CommentFeed';
 import Spinner from '../common/Spinner';
-import { getPost } from '../../actions/postActions';
+import { getPost } from '../../actions/postAction';
 
 class Post extends Component {
   componentDidMount() {
