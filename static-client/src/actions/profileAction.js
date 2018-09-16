@@ -19,6 +19,7 @@ export const getProfiles = () => dispatch =>{
 	dispatch(setProfileLoading());
 	axios.get('/api/profiles/all')
 	.then(response=>{
+
 		dispatch({ type:GET_PROFILES, payload: response.data, });
 	})
 	.catch(err=> dispatch({type: GET_PROFILES, payload: {}}));
