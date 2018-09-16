@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-//import { deleteEducation } from '../../actions/profileActions';
+import { deleteEducation } from '../../actions/profileAction';
 
 class Education extends Component {
   onDeleteClick(id) {
-    //this.props.deleteEducation(id);
+    this.props.deleteEducation(id);
   }
 
   render() {
@@ -52,8 +52,7 @@ class Education extends Component {
 }
 
 Education.propTypes = {
-  //deleteEducation: PropTypes.func.isRequired
+  deleteEducation: PropTypes.func.isRequired
 };
 
-//export default connect(null, { deleteEducation })(Education);
-export default Education;
+export default connect(null, { deleteEducation })(Education);
