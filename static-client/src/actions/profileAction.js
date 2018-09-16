@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {logoutUser} from './loginAction'; 
 
-import {GET_CURRENT_PROFILE,  PROFILE_LOADING, CLEAR_CURRENT_PROFILE,
+import {GET_CURRENT_PROFILE,  PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_PROFILES,
 	DELETE_ACCOUNT,
 	GET_ERRORS,
 } from './types';
@@ -14,6 +14,17 @@ export const getCurrentProfile = () => dispatch =>{
 	})
 	.catch(err=> dispatch({type: GET_CURRENT_PROFILE, payload: {}}));
 }
+
+export const getProfiles = () => dispatch =>{
+	dispatch(setProfileLoading());
+	axios.get('/api/profiles/all')
+	.then(response=>{
+		dispatch({ type:GET_PROFILES, payload: response.data, });
+	})
+	.catch(err=> dispatch({type: GET_PROFILES, payload: {}}));
+}
+
+
 
 export const setProfileLoading = () => dispatch =>{
 	return {
