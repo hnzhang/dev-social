@@ -25,7 +25,11 @@ export const getProfiles = () => dispatch =>{
 	.catch(err=> dispatch({type: GET_PROFILES, payload: {}}));
 }
 
-
+export const getProfileByHandle = (profileHandle) => dispatch => {
+	axios.get(`/api/profiles/handle/${profileHandle}`)
+	.then(response => dispatch({type:GET_CURRENT_PROFILE, payload: response.data}))
+	.catch(err => dispatch({type: GET_CURRENT_PROFILE, payload: {}}));
+}
 
 export const setProfileLoading = () => dispatch =>{
 	return {

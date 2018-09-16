@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import isEmpty from '../../validation/is-empty';
+import {isEmpty} from '../../utils/utils';
 
 class ProfileHeader extends Component {
   render() {

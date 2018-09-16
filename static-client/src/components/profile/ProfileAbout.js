@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from '../../validation/is-empty';
+import {isEmpty} from '../../utils/utils';
 
 class ProfileAbout extends Component {
   render() {
     const { profile } = this.props;
 
     // Get first name
-    const firstName = profile.user.name.trim().split(' ')[0];
+    const names = profile.user.name.trim().split(' ');
+    const firstName = names.length > 0 ? names[0] : '';
 
     // Skill List
     const skills = profile.skills.map((skill, index) => (
