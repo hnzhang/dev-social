@@ -24,7 +24,7 @@ module.exports = function validateExperienceInput(data){
             errors.from = 'Job start date field is required';
         }
         
-        if(validator.isEmpty(data.to) && (!validator.isBoolean(data.current)|| validator.toBoolean(data.current) !== true) ){
+        if(validator.isEmpty(data.to) && (!validator.isBoolean(data.current.toString())|| validator.toBoolean(data.current.toString()) !== true) ){
             errors.to = 'Job should have end date or be current';
             errors.current = 'Job should have end date or be current';
         }

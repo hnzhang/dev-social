@@ -18,7 +18,7 @@ module.exports = function validateEducationInput(data){
     if(validator.isEmpty(data.from)){
         errors.from = "Starting date is needed for education info";
     }
-    if(validator.isEmpty(data.to) && (validator.isEmpty(data.current) || validator.toBoolean(data.current) === false )){
+    if(validator.isEmpty(data.to) && (validator.isEmpty(data.current.toString()) || validator.toBoolean(data.current.toString()) === false )){
         errors.to = "Ending date is needed for education info";
         errors.current = "Please either provide ending date or set current as true";
     }
