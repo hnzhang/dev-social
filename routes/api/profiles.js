@@ -75,17 +75,25 @@ router.post('/', passport.authenticate('jwt', { sesson: false}), (request, respo
 	if(request.body.youtube){
 		profileFields.social.youtube = request.body.youtube;
 	}
+	if(request.body.bio){
+		profileFields.bio = request.body.bio;
+	}
 
-	console.log("twitter", profileFields.social.twitter, request.body.twitter);
 
 	Profile.findOne({user: request.user.id})
 		.then(profile=>{
 			if(profile){//this will be update instead of create
-				Profile.update(
+				Profile.updateOne(
 						{user: request.user.id},
 						{ $set: profileFields},
 						{new: true}
-					).then(profile => response.json(profile));
+					).then((result) =>{ 
+						Profile.findOne({user: request.user.id})
+							.then(profile=>{
+								response.json(profile);
+								console.log(profile);
+							});
+					});
 			}else{//create
 				Profile.findOne({handle: profileFields.handle})
 					.then(profile =>{
