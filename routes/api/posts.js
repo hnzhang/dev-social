@@ -78,7 +78,7 @@ router.get('/test', (request, response)=>{
 					}
 					post.remove().then(()=>{
 						response.json({status: "Success of deleting post"});
-					})
+					});
 				})
 				.catch(err => response.status(404).json({errors: " no post found for deletion"}));
 		}));
@@ -94,9 +94,6 @@ router.get('/test', (request, response)=>{
 	 	.then(profile=>{
 			 Post.findById(request.params.post_id)
 				.then(post=>{
-					console.log("post_id", request.params.post_id);
-					console.log(post);
-
 					if(post.likes.filter(like => like.user.toString() === request.user.id).length >0){
 						return response.status(400).json({errors:"like exists already"});
 					}
