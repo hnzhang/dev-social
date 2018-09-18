@@ -140,15 +140,17 @@ router.get('/test', (request, response)=>{
 			Post.findById(request.params.post_id)
 				.then(post=>{
 					const newComment = {
-						user: profile._id,
+						user: request.user.id,
 						text: request.body.text,
 						name: profile.name,
 						avatar: request.user.avatar,
 					};
+					console.log("newl comment data ", newComment);
 					post.comments.unshift(newComment);
-					post.save().then(post=> response.json(post));
+					post.save().then(()=> response.json(post));
+					console.log("newly saved post", post);
 				})
-				.catch(err => response.status(400).json({post_comment_add:" Error happened"}));
+				//.catch(err => response.status(400).json({post_comment_add:" Error happened"}));
 		});
  } );
 

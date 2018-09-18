@@ -29,7 +29,7 @@ class PostItem extends Component {
 
   render() {
     const { post, auth, showActions } = this.props;
-
+    console.log("rendering postItem");
     return (
       <div className="card card-body mb-3">
         <div className="row">
@@ -87,7 +87,7 @@ PostItem.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { deletePost, addLike, removeLike })( PostItem);

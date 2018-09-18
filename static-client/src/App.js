@@ -23,7 +23,7 @@ import AddExperience from './components/add-credentials/AddExperience';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
-import CommentForm  from './components/post/CommentForm';
+import Post  from './components/post/Post';
 
 import NotFound from './components/not-found/NotFound';
 
@@ -74,7 +74,7 @@ class App extends Component {
                 <PrivateRoute exact path='/feed' component={Posts} />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/post/:postId" component={CommentForm} />
+                <PrivateRoute exact path="/post/:postId" component={Post} />
               </Switch>
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:handle' component={Profile} />
