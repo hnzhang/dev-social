@@ -35,7 +35,7 @@ class PostItem extends Component {
         <div className="row">
           <div className="col-md-2">
               <img className="rounded-circle d-none d-md-block"
-                src={post.avatar} alt="" />
+                src={post.avatar} alt="user's avatar" />
             <br />
             <p className="text-center">{post.name}</p>
           </div>
@@ -47,7 +47,7 @@ class PostItem extends Component {
                   type="button"
                   className="btn btn-light mr-1" >
                   <i
-                    className={classnames('fas fa-thumbs-up', {
+                    className={classnames('far fa-thumbs-up', {
                       'text-info': this.findUserLike(post.likes)
                     })}
                   />
