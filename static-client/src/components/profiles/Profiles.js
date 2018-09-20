@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../common/Spinner';
 import ProfileItem from './ProfileItem';
-import { getProfiles } from '../../actions/profileAction';
+import { getProfilesAction } from '../../actions/profileAction';
 
 class Profiles extends Component {
   componentDidMount() {
-    this.props.getProfiles();
+    this.props.getProfilesAction();
   }
 
   render() {
@@ -45,7 +45,7 @@ class Profiles extends Component {
 }
 
 Profiles.propTypes = {
-  getProfiles: PropTypes.func.isRequired,
+  getProfilesAction: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 
@@ -53,4 +53,4 @@ const mapStateToProps = state => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default connect(mapStateToProps, { getProfilesAction })(Profiles);

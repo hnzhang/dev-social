@@ -100,3 +100,10 @@ export const deleteExperience= (experienceId) => dispatch => {
 		.then(response => dispatch({type:GET_CURRENT_PROFILE, payload: response.data}))
 		.catch(err => dispatch({type: GET_ERRORS, playload: err.response.data}));
 }
+
+///////////////////////////////////////////////////////////////
+//Actions for saga
+export const getProfilesAction = ()=>{
+	
+	return {type: "FETCH_PROFILES", payload:{}};
+}
