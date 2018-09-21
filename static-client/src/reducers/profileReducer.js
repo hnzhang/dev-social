@@ -24,7 +24,6 @@ function profileReducer (state = initState, action){
 				profile: null,
 			};
 		case GET_PROFILES:
-			console.log("reducer of profiles", action.payload);
 			return {
 				...state,
 				profiles: action.payload,

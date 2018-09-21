@@ -1,10 +1,15 @@
 import {fork} from 'redux-saga/effects';
 //import getPosts from './getPosts';
-import getProfiles from './getProfiles';
+import {
+	watchGetProfiles, watchGetProfileByHandle,
+	watchLoginUser,
+} from './watcher';
+
 /**
  * this is the rootSaga
  */
 export default function *startForman(){
-	//yield fork(getPosts);
-	yield fork(getProfiles);
+	yield fork(watchGetProfiles);
+	yield fork(watchGetProfileByHandle);
+	yield fork(watchLoginUser);
 }

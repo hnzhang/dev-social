@@ -4,6 +4,8 @@ import {logoutUser} from './loginAction';
 import {GET_CURRENT_PROFILE,  PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_PROFILES,
 	DELETE_ACCOUNT,
 	GET_ERRORS,
+	FETCH_PROFILES,
+	FETCH_CURRENT_PROFILE,
 } from './types';
 
 export const getCurrentProfile = () => dispatch =>{
@@ -104,6 +106,10 @@ export const deleteExperience= (experienceId) => dispatch => {
 ///////////////////////////////////////////////////////////////
 //Actions for saga
 export const getProfilesAction = ()=>{
-	
-	return {type: "FETCH_PROFILES", payload:{}};
+	return {type: FETCH_PROFILES, payload:{}};
+}
+
+export const getProfileByHandleAction = (profileHandle) =>{
+	console.log("getProfileByHandleAction ", profileHandle);
+	return {type: FETCH_CURRENT_PROFILE, payload: profileHandle};
 }

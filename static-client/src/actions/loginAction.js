@@ -12,27 +12,11 @@ export function setCurrentUser(userData){
 	};
 }
 
-export const loginUser = (loginData, history) => dispatch => {
-	axios.post('/api/users/login', loginData)
-		.then(response => {
-			//save to localStorage
-			const {token} = response.data;
-			localStorage.setItem('jwtToken', token);
-			//set token to Auth header
-			setAuthToken(token);
-			//deode data fro jwt
-			const decoded = jwtDecoder(token);
-			//set current user
-			dispatch(setCurrentUser(decoded));
-			console.log(response.data);
-			console.log("login successfully");
-		})
-		.catch(err=>{
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data,
-			});
-		});
+export function loginAction(loginData, history){
+	return {
+		type: "TRY_TO_LOGIN",
+		payload: loginData,
+	}
 }
 
 export const logoutUser = ( ) => dispatch => {
